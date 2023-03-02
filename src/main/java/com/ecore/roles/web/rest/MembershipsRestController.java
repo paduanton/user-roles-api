@@ -5,6 +5,8 @@ import com.ecore.roles.service.MembershipsService;
 import com.ecore.roles.web.MembershipsApi;
 import com.ecore.roles.web.dto.MembershipDto;
 import lombok.RequiredArgsConstructor;
+import java.util.stream.Collectors;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -39,19 +41,11 @@ public class MembershipsRestController implements MembershipsApi {
             path = "/search",
             produces = {"application/json"})
     public ResponseEntity<List<MembershipDto>> getMemberships(@RequestParam UUID roleId) {
-        
-        List<Membership> memberships = membershipsService.getMemberships(roleId);
-
-        List<MembershipDto> newMembershipDto = new ArrayList<>();
-
-        for (Membership membership : memberships) {
-            MembershipDto membershipDto = fromModel(membership);
-            newMembershipDto.add(membershipDto);
-        }
-
         return ResponseEntity
                 .status(200)
-                .body(newMembershipDto);
+                .body(membershipsService.getMemberships(roleId).stream()
+                        .map(MembershipDto::fromModel)
+                        .collect(Collectors.toList()));
     }
 
 }
