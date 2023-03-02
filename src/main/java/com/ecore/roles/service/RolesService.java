@@ -12,7 +12,7 @@ public interface RolesService {
 
     List<Role> GetRoles();
 
-    List<Role> GetRolesByUserIdAndTeamId(UUID userId, UUID teamId);
+    // List<Role> GetRolesByUserIdAndTeamId(UUID userId, UUID teamId);
 
     Role CreateRole(Role role);
 }

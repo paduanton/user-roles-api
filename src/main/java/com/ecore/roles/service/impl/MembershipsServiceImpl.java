@@ -53,4 +53,6 @@ public class MembershipsServiceImpl implements MembershipsService {
     public List<Membership> getMemberships(@NonNull UUID rid) {
         return membershipRepository.findByRoleId(rid);
     }
+
+
 }
