@@ -7,6 +7,7 @@ import com.ecore.roles.web.dto.RoleDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -37,19 +38,11 @@ public class RolesRestController implements RolesApi {
     @GetMapping(
             produces = {"application/json"})
     public ResponseEntity<List<RoleDto>> getRoles() {
-
-        List<Role> getRoles = rolesService.GetRoles();
-
-        List<RoleDto> roleDtoList = new ArrayList<>();
-
-        for (Role role : getRoles) {
-            RoleDto roleDto = fromModel(role);
-            roleDtoList.add(roleDto);
-        }
-
         return ResponseEntity
                 .status(200)
-                .body(roleDtoList);
+                .body(rolesService.GetRoles().stream()
+                        .map(RoleDto::fromModel)
+                        .collect(Collectors.toList()));
     }
 
     @Override
@@ -62,5 +55,17 @@ public class RolesRestController implements RolesApi {
                 .status(200)
                 .body(fromModel(rolesService.GetRole(roleId)));
     }
+
+//     @Override
+//     @GetMapping(
+//             path = "/search",
+//             produces = {"application/json"})
+//     public ResponseEntity<List<MembershipDto>> getMemberships(@RequestParam UUID roleId) {
+//         return ResponseEntity
+//                 .status(200)
+//                 .body(membershipsService.getMemberships(roleId).stream()
+//                         .map(MembershipDto::fromModel)
+//                         .collect(Collectors.toList()));
+//     }
 
 }

@@ -1,5 +1,6 @@
 package com.ecore.roles.web.rest;
 
+
 import com.ecore.roles.service.UsersService;
 import com.ecore.roles.web.UsersApi;
 import com.ecore.roles.web.dto.UserDto;
