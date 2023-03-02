@@ -60,7 +60,7 @@ public class RolesRestController implements RolesApi {
 //     @GetMapping(
 //             path = "/search",
 //             produces = {"application/json"})
-//     public ResponseEntity<List<MembershipDto>> getMemberships(@RequestParam UUID roleId) {
+//     public ResponseEntity<List<MembershipDto>> getMemberships(@RequestParam UUID userId, @RequestParam UUID teamId) {
 //         return ResponseEntity
 //                 .status(200)
 //                 .body(membershipsService.getMemberships(roleId).stream()

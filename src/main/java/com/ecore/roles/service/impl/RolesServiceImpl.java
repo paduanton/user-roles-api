@@ -54,8 +54,8 @@ public class RolesServiceImpl implements RolesService {
         return roleRepository.findAll();
     }
 
-    private Role getDefaultRole() {
-        return roleRepository.findByName(DEFAULT_ROLE)
-                .orElseThrow(() -> new IllegalStateException("Default role is not configured"));
-    }
+    // @Override
+    // public List<Role> GetRolesByUserIdAndTeamId(@NonNull UUID rid) {
+    //     return roleRepository.findByUserIdAndTeamId(rid);
+    // }
 }
