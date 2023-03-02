@@ -38,9 +38,8 @@ public class MembershipsRestController implements MembershipsApi {
     @GetMapping(
             path = "/search",
             produces = {"application/json"})
-    public ResponseEntity<List<MembershipDto>> getMemberships(
-            @RequestParam UUID roleId) {
-
+    public ResponseEntity<List<MembershipDto>> getMemberships(@RequestParam UUID roleId) {
+        
         List<Membership> memberships = membershipsService.getMemberships(roleId);
 
         List<MembershipDto> newMembershipDto = new ArrayList<>();
