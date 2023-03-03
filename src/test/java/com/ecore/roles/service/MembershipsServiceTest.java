@@ -34,8 +34,8 @@ import org.springframework.http.HttpStatus;
 
 @ExtendWith(MockitoExtension.class)
 class MembershipsServiceTest {
-        @InjectMocks
-        private TeamsServiceImplementation TeamsService;
+    @InjectMocks
+    private TeamsServiceImplementation TeamsService;
     @InjectMocks
     private MembershipsServiceImplementation membershipsService;
     @Mock
@@ -60,11 +60,11 @@ class MembershipsServiceTest {
         when(membershipRepository
                 .save(expectedMembership))
                         .thenReturn(expectedMembership);
-                        Team ordinaryCoralLynxTeam = ORDINARY_CORAL_LYNX_TEAM();
-                        when(TeamsClient.getTeam(ORDINARY_CORAL_LYNX_TEAM_UUID))
-                                .thenReturn(ResponseEntity
-                                        .status(HttpStatus.OK)
-                                        .body(ordinaryCoralLynxTeam));
+        Team ordinaryCoralLynxTeam = ORDINARY_CORAL_LYNX_TEAM();
+        when(TeamsClient.getTeam(ORDINARY_CORAL_LYNX_TEAM_UUID))
+                .thenReturn(ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(ordinaryCoralLynxTeam));
         Membership actualMembership = membershipsService.assignRoleToMembership(expectedMembership);
 
         assertNotNull(actualMembership);
