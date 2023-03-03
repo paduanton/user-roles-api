@@ -1,5 +1,6 @@
 package com.ecore.roles.web.rest;
 
+import com.ecore.roles.model.Role;
 import com.ecore.roles.service.RolesService;
 import com.ecore.roles.web.RolesApi;
 import com.ecore.roles.web.dto.RoleDto;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.stream.Collectors;
+import com.ecore.roles.exception.InvalidArgumentException;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -56,6 +58,11 @@ public class RolesRestController implements RolesApi {
         public ResponseEntity<RoleDto> getRoleByUserIdAndTeamId(
                         @NotNull @RequestParam UUID userId,
                         @NotNull @RequestParam UUID teamId) {
+
+                if (userId == null || teamId == null) {
+                        throw new InvalidArgumentException(Role.class);
+                }
+
                 return ResponseEntity
                                 .status(200)
                                 .body(fromModel(rolesService.getRoleByUserIdAndTeamId(userId, teamId)));

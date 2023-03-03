@@ -1,6 +1,5 @@
 package com.ecore.roles.service.implementation;
 
-import com.ecore.roles.exception.InvalidArgumentException;
 import com.ecore.roles.exception.ResourceExistsException;
 import com.ecore.roles.exception.ResourceNotFoundException;
 import com.ecore.roles.model.Role;
@@ -54,16 +53,10 @@ public class RolesServiceImplementation implements RolesService {
 
     @Override
     public Role getRoleByUserIdAndTeamId(UUID userId, UUID teamId) {
-
-        if (userId == null || teamId == null) {
-            throw new InvalidArgumentException(Role.class);
-        }
-
-
         if(teamsClient.getTeam(teamId).getBody() == null) {
             throw new ResourceNotFoundException(Team.class, teamId);
         }
-        
+
         return roleRepository.findByUserIdAndTeamId(userId, teamId);
     }
 }
