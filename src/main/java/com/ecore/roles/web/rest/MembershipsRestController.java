@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,26 +21,26 @@ import static com.ecore.roles.web.dto.MembershipDto.fromModel;
 @RequestMapping(value = "/v1/roles/memberships")
 public class MembershipsRestController implements MembershipsApi {
 
-        private final MembershipsService membershipsService;
+    private final MembershipsService membershipsService;
 
-        @Override
-        @PostMapping(consumes = { "application/json" }, produces = { "application/json" })
-        public ResponseEntity<MembershipDto> assignRoleToMembership(
-                        @NotNull @Valid @RequestBody MembershipDto membershipDto) {
-                Membership membership = membershipsService.assignRoleToMembership(membershipDto.toModel());
-                return ResponseEntity
-                                .status(200)
-                                .body(fromModel(membership));
-        }
+    @Override
+    @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
+    public ResponseEntity<MembershipDto> assignRoleToMembership(
+            @NotNull @Valid @RequestBody MembershipDto membershipDto) {
+        Membership membership = membershipsService.assignRoleToMembership(membershipDto.toModel());
+        return ResponseEntity
+                .status(200)
+                .body(fromModel(membership));
+    }
 
-        @Override
-        @GetMapping(path = "/search", produces = { "application/json" })
-        public ResponseEntity<List<MembershipDto>> getMembershipsByRoleId(@NotNull @RequestParam UUID roleId) {
-                return ResponseEntity
-                                .status(200)
-                                .body(membershipsService.getMembershipsByRoleId(roleId).stream()
-                                                .map(MembershipDto::fromModel)
-                                                .collect(Collectors.toList()));
-        }
+    @Override
+    @GetMapping(path = "/search", produces = {"application/json"})
+    public ResponseEntity<List<MembershipDto>> getMembershipsByRoleId(@NotNull @RequestParam UUID roleId) {
+        return ResponseEntity
+                .status(200)
+                .body(membershipsService.getMembershipsByRoleId(roleId).stream()
+                        .map(MembershipDto::fromModel)
+                        .collect(Collectors.toList()));
+    }
 
 }
