@@ -5,7 +5,8 @@ import com.ecore.roles.exception.ResourceExistsException;
 import com.ecore.roles.model.Membership;
 import com.ecore.roles.repository.MembershipRepository;
 import com.ecore.roles.repository.RoleRepository;
-import com.ecore.roles.service.impl.MembershipsServiceImpl;
+import com.ecore.roles.service.implementation.MembershipsServiceImplementation;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -27,77 +28,77 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class MembershipsServiceTest {
 
-    @InjectMocks
-    private MembershipsServiceImpl membershipsService;
-    @Mock
-    private MembershipRepository membershipRepository;
-    @Mock
-    private RoleRepository roleRepository;
-    @Mock
-    private UsersService usersService;
-    @Mock
-    private TeamsService teamsService;
+        @InjectMocks
+        private MembershipsServiceImplementation membershipsService;
+        @Mock
+        private MembershipRepository membershipRepository;
+        @Mock
+        private RoleRepository roleRepository;
+        @Mock
+        private UsersService usersService;
+        @Mock
+        private TeamsService teamsService;
 
-    @Test
-    public void shouldCreateMembership() {
-        Membership expectedMembership = DEFAULT_MEMBERSHIP();
-        when(roleRepository.findById(expectedMembership.getRole().getId()))
-                .thenReturn(Optional.ofNullable(DEVELOPER_ROLE()));
-        when(membershipRepository.findByUserIdAndTeamId(expectedMembership.getUserId(),
-                expectedMembership.getTeamId()))
-                        .thenReturn(Optional.empty());
-        when(membershipRepository
-                .save(expectedMembership))
-                        .thenReturn(expectedMembership);
+        @Test
+        public void shouldCreateMembership() {
+                Membership expectedMembership = DEFAULT_MEMBERSHIP();
+                when(roleRepository.findById(expectedMembership.getRole().getId()))
+                                .thenReturn(Optional.ofNullable(DEVELOPER_ROLE()));
+                when(membershipRepository.findByUserIdAndTeamId(expectedMembership.getUserId(),
+                                expectedMembership.getTeamId()))
+                                .thenReturn(Optional.empty());
+                when(membershipRepository
+                                .save(expectedMembership))
+                                .thenReturn(expectedMembership);
 
-        Membership actualMembership = membershipsService.assignRoleToMembership(expectedMembership);
+                Membership actualMembership = membershipsService.assignRoleToMembership(expectedMembership);
 
-        assertNotNull(actualMembership);
-        assertEquals(actualMembership, expectedMembership);
-        verify(roleRepository).findById(expectedMembership.getRole().getId());
-    }
+                assertNotNull(actualMembership);
+                assertEquals(actualMembership, expectedMembership);
+                verify(roleRepository).findById(expectedMembership.getRole().getId());
+        }
 
-    @Test
-    public void shouldFailToCreateMembershipWhenMembershipsIsNull() {
-        assertThrows(NullPointerException.class,
-                () -> membershipsService.assignRoleToMembership(null));
-    }
+        @Test
+        public void shouldFailToCreateMembershipWhenMembershipsIsNull() {
+                assertThrows(NullPointerException.class,
+                                () -> membershipsService.assignRoleToMembership(null));
+        }
 
-    @Test
-    public void shouldFailToCreateMembershipWhenItExists() {
-        Membership expectedMembership = DEFAULT_MEMBERSHIP();
-        when(membershipRepository.findByUserIdAndTeamId(expectedMembership.getUserId(),
-                expectedMembership.getTeamId()))
-                        .thenReturn(Optional.of(expectedMembership));
+        @Test
+        public void shouldFailToCreateMembershipWhenItExists() {
+                Membership expectedMembership = DEFAULT_MEMBERSHIP();
+                when(membershipRepository.findByUserIdAndTeamId(expectedMembership.getUserId(),
+                                expectedMembership.getTeamId()))
+                                .thenReturn(Optional.of(expectedMembership));
 
-        ResourceExistsException exception = assertThrows(ResourceExistsException.class,
-                () -> membershipsService.assignRoleToMembership(expectedMembership));
+                ResourceExistsException exception = assertThrows(ResourceExistsException.class,
+                                () -> membershipsService.assignRoleToMembership(expectedMembership));
 
-        assertEquals("Membership already exists", exception.getMessage());
-        verify(roleRepository, times(0)).getById(any());
-        verify(usersService, times(0)).getUser(any());
-        verify(teamsService, times(0)).getTeam(any());
-    }
+                assertEquals("Membership already exists", exception.getMessage());
+                verify(roleRepository, times(0)).getById(any());
+                verify(usersService, times(0)).getUser(any());
+                verify(teamsService, times(0)).getTeam(any());
+        }
 
-    @Test
-    public void shouldFailToCreateMembershipWhenItHasInvalidRole() {
-        Membership expectedMembership = DEFAULT_MEMBERSHIP();
-        expectedMembership.setRole(null);
+        @Test
+        public void shouldFailToCreateMembershipWhenItHasInvalidRole() {
+                Membership expectedMembership = DEFAULT_MEMBERSHIP();
+                expectedMembership.setRole(null);
 
-        InvalidArgumentException exception = assertThrows(InvalidArgumentException.class,
-                () -> membershipsService.assignRoleToMembership(expectedMembership));
+                InvalidArgumentException exception = assertThrows(InvalidArgumentException.class,
+                                () -> membershipsService.assignRoleToMembership(expectedMembership));
 
-        assertEquals("Invalid 'Role' object", exception.getMessage());
-        verify(membershipRepository, times(0)).findByUserIdAndTeamId(any(), any());
-        verify(roleRepository, times(0)).getById(any());
-        verify(usersService, times(0)).getUser(any());
-        verify(teamsService, times(0)).getTeam(any());
-    }
+                assertEquals("Invalid 'Role' object", exception.getMessage());
+                verify(membershipRepository, times(0)).findByUserIdAndTeamId(any(), any());
+                verify(roleRepository, times(0)).getById(any());
+                verify(usersService, times(0)).getUser(any());
+                verify(teamsService, times(0)).getTeam(any());
+        }
 
-    @Test
-    public void shouldFailToGetMembershipsWhenRoleIdIsNull() {
-        assertThrows(NullPointerException.class,
-                () -> membershipsService.getMembershipsByRoleId(null));
-    }
+        @Test
+        public void shouldFailToGetMembershipsWhenRoleIdIsNull() {
+                assertThrows(NullPointerException.class,
+                                () -> membershipsService.getMembershipsByRoleId(null));
+        }
 
 }

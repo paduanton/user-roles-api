@@ -1,4 +1,4 @@
-package com.ecore.roles.service.impl;
+package com.ecore.roles.service.implementation;
 
 import com.ecore.roles.exception.ResourceExistsException;
 import com.ecore.roles.exception.ResourceNotFoundException;
@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @Log4j2
 @Service
-public class RolesServiceImpl implements RolesService {
+public class RolesServiceImplementation implements RolesService {
 
     public static final String DEFAULT_ROLE = "Developer";
 
@@ -26,7 +26,7 @@ public class RolesServiceImpl implements RolesService {
     private final MembershipsService membershipsService;
 
     @Autowired
-    public RolesServiceImpl(
+    public RolesServiceImplementation(
             RoleRepository roleRepository,
             MembershipRepository membershipRepository,
             MembershipsService membershipsService) {
@@ -36,7 +36,7 @@ public class RolesServiceImpl implements RolesService {
     }
 
     @Override
-    public Role CreateRole(@NonNull Role r) {
+    public Role createRole(@NonNull Role r) {
         if (roleRepository.findByName(r.getName()).isPresent()) {
             throw new ResourceExistsException(Role.class);
         }
@@ -44,18 +44,18 @@ public class RolesServiceImpl implements RolesService {
     }
 
     @Override
-    public Role GetRole(@NonNull UUID rid) {
+    public Role getRole(@NonNull UUID rid) {
         return roleRepository.findById(rid)
                 .orElseThrow(() -> new ResourceNotFoundException(Role.class, rid));
     }
 
     @Override
-    public List<Role> GetRoles() {
+    public List<Role> getRoles() {
         return roleRepository.findAll();
     }
 
     // @Override
     // public List<Role> GetRolesByUserIdAndTeamId(@NonNull UUID rid) {
-    //     return roleRepository.findByUserIdAndTeamId(rid);
+    // return roleRepository.findByUserIdAndTeamId(rid);
     // }
 }

@@ -7,12 +7,11 @@ import java.util.UUID;
 
 public interface RolesService {
 
+    Role getRole(UUID id);
 
-    Role GetRole(UUID id);
+    List<Role> getRoles();
 
-    List<Role> GetRoles();
+    // List<Role> getRolesByUserIdAndTeamId(UUID userId, UUID teamId);
 
-    // List<Role> GetRolesByUserIdAndTeamId(UUID userId, UUID teamId);
-
-    Role CreateRole(Role role);
+    Role createRole(Role role);
 }

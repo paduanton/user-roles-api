@@ -1,4 +1,4 @@
-package com.ecore.roles.service.impl;
+package com.ecore.roles.service.implementation;
 
 import com.ecore.roles.client.TeamsClient;
 import com.ecore.roles.client.model.Team;
@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class TeamsServiceImpl implements TeamsService {
+public class TeamsServiceImplementation implements TeamsService {
 
     private final TeamsClient teamsClient;
 
     @Autowired
-    public TeamsServiceImpl(TeamsClient teamsClient) {
+    public TeamsServiceImplementation(TeamsClient teamsClient) {
         this.teamsClient = teamsClient;
     }
 

@@ -1,4 +1,4 @@
-package com.ecore.roles.service.impl;
+package com.ecore.roles.service.implementation;
 
 import com.ecore.roles.exception.InvalidArgumentException;
 import com.ecore.roles.exception.ResourceExistsException;
@@ -20,13 +20,13 @@ import static java.util.Optional.ofNullable;
 
 @Log4j2
 @Service
-public class MembershipsServiceImpl implements MembershipsService {
+public class MembershipsServiceImplementation implements MembershipsService {
 
     private final MembershipRepository membershipRepository;
     private final RoleRepository roleRepository;
 
     @Autowired
-    public MembershipsServiceImpl(
+    public MembershipsServiceImplementation(
             MembershipRepository membershipRepository,
             RoleRepository roleRepository) {
         this.membershipRepository = membershipRepository;
@@ -45,7 +45,7 @@ public class MembershipsServiceImpl implements MembershipsService {
         }
 
         roleRepository.findById(roleId).orElseThrow(() -> new ResourceNotFoundException(Role.class, roleId));
-        
+
         return membershipRepository.save(membership);
     }
 
@@ -53,6 +53,5 @@ public class MembershipsServiceImpl implements MembershipsService {
     public List<Membership> getMembershipsByRoleId(@NonNull UUID rid) {
         return membershipRepository.findByRoleId(rid);
     }
-
 
 }
