@@ -50,8 +50,8 @@ public class MembershipsServiceImplementation implements MembershipsService {
     }
 
     @Override
-    public List<Membership> getMembershipsByRoleId(@NonNull UUID rid) {
-        return membershipRepository.findByRoleId(rid);
+    public List<Membership> getMembershipsByRoleId(@NonNull UUID roleId) {
+        return membershipRepository.findByRoleId(roleId);
     }
 
 }

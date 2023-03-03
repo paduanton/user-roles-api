@@ -13,7 +13,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
+import org.springframework.lang.Nullable; 
 import static com.ecore.roles.web.dto.RoleDto.fromModel;
 
 @RequiredArgsConstructor
@@ -53,8 +53,8 @@ public class RolesRestController implements RolesApi {
 
         @Override
         @GetMapping(path = "/search", produces = { "application/json" })
-        public ResponseEntity<List<RoleDto>> getRolesByUserIdAndTeamId(@RequestParam UUID userId,
-                        @RequestParam UUID teamId) {
+        public ResponseEntity<List<RoleDto>> getRolesByUserIdAndTeamId(@Nullable @RequestParam UUID userId,
+                        @Nullable @RequestParam UUID teamId) {
                 return ResponseEntity
                                 .status(200)
                                 .body(rolesService.getRolesByUserIdAndTeamId(userId, teamId).stream()

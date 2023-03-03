@@ -13,8 +13,14 @@ import java.util.List;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, UUID> {
 
-    @Query("SELECT r FROM Role r LEFT JOIN r.membership m WHERE m.userId = :userId AND m.teamId = :teamId") // AND m.user_id = ?1  AND m.team_id = ?2
+    @Query("SELECT r FROM Role r LEFT JOIN r.membership m WHERE m.userId = :userId AND m.teamId = :teamId")
     List<Role> findByUserIdAndTeamId(UUID userId, UUID teamId);
+    
+    @Query("SELECT r FROM Role r LEFT JOIN r.membership m WHERE m.userId = :userId")
+    List<Role> findByUserId(UUID userId);
+    
+    @Query("SELECT r FROM Role r LEFT JOIN r.membership m WHERE m.teamId = :teamId")
+    List<Role> findByTeamId(UUID teamId);
 
     Optional<Role> findByName(String name);
 }

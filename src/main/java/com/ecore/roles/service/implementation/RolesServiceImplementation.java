@@ -55,7 +55,19 @@ public class RolesServiceImplementation implements RolesService {
     }
 
     @Override
-    public List<Role> getRolesByUserIdAndTeamId(@NonNull UUID userId, @NonNull UUID teamId) {
-        return roleRepository.findByUserIdAndTeamId(userId, teamId);
+    public List<Role> getRolesByUserIdAndTeamId(UUID userId, UUID teamId) {
+        List<Role> roles;
+
+        if (userId != null && teamId != null) {
+            roles = roleRepository.findByUserIdAndTeamId(userId, teamId);
+        } else if (userId != null) {
+            roles = roleRepository.findByUserId(userId);
+        } else if (teamId != null) {
+            roles = roleRepository.findByTeamId(teamId);
+        } else {
+            roles = roleRepository.findAll();
+        }
+
+        return roles;
     }
 }
