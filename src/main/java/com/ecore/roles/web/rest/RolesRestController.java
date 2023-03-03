@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import java.util.List;
 import java.util.UUID;
 import org.springframework.lang.Nullable;
@@ -52,8 +54,8 @@ public class RolesRestController implements RolesApi {
     @Override
     @GetMapping(path = "/search", produces = {"application/json"})
     public ResponseEntity<List<RoleDto>> getRolesByUserIdAndTeamId(
-            @Nullable @RequestParam UUID userId,
-            @Nullable @RequestParam UUID teamId) {
+            @NotNull @RequestParam UUID userId,
+            @NotNull @RequestParam UUID teamId) {
         return ResponseEntity
                 .status(200)
                 .body(rolesService.getRolesByUserIdAndTeamId(userId, teamId).stream()
