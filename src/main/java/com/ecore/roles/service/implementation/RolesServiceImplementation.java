@@ -10,6 +10,8 @@ import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.ecore.roles.client.TeamsClient;
+import com.ecore.roles.client.model.Team;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,11 +23,14 @@ public class RolesServiceImplementation implements RolesService {
     public static final String DEFAULT_ROLE = "Developer";
 
     private final RoleRepository roleRepository;
+    private final TeamsClient teamsClient;
 
     @Autowired
     public RolesServiceImplementation(
-            RoleRepository roleRepository) {
+            RoleRepository roleRepository,
+            TeamsClient teamsClient) {
         this.roleRepository = roleRepository;
+        this.teamsClient = teamsClient;
     }
 
     @Override
@@ -54,6 +59,11 @@ public class RolesServiceImplementation implements RolesService {
             throw new InvalidArgumentException(Role.class);
         }
 
+
+        if(teamsClient.getTeam(teamId).getBody() == null) {
+            throw new ResourceNotFoundException(Team.class, teamId);
+        }
+        
         return roleRepository.findByUserIdAndTeamId(userId, teamId);
     }
 }
