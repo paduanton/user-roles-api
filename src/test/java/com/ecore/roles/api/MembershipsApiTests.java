@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import static com.ecore.roles.utils.MockUtils.mockGetTeamById;
 import static com.ecore.roles.utils.RestAssuredHelper.createMembership;
-import static com.ecore.roles.utils.RestAssuredHelper.getMemberships;
+import static com.ecore.roles.utils.RestAssuredHelper.getMembershipsByRoleId;
 import static com.ecore.roles.utils.TestData.*;
 import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -137,7 +137,7 @@ public class MembershipsApiTests {
         createDefaultMembership();
         Membership expectedMembership = DEFAULT_MEMBERSHIP();
 
-        MembershipDto[] actualMemberships = getMemberships(expectedMembership.getRole().getId())
+        MembershipDto[] actualMemberships = getMembershipsByRoleId(expectedMembership.getRole().getId())
                 .statusCode(200)
                 .extract().as(MembershipDto[].class);
 
@@ -148,7 +148,7 @@ public class MembershipsApiTests {
 
     @Test
     void shouldGetAllMembershipsButReturnsEmptyList() {
-        MembershipDto[] actualMemberships = getMemberships(DEVELOPER_ROLE_UUID)
+        MembershipDto[] actualMemberships = getMembershipsByRoleId(DEVELOPER_ROLE_UUID)
                 .statusCode(200)
                 .extract().as(MembershipDto[].class);
 
@@ -157,7 +157,7 @@ public class MembershipsApiTests {
 
     @Test
     void shouldFailToGetAllMembershipsWhenRoleIdIsNull() {
-        getMemberships(null)
+        getMembershipsByRoleId(null)
                 .validate(400, "Bad Request");
     }
 

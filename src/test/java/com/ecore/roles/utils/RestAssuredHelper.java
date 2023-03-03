@@ -69,7 +69,7 @@ public class RestAssuredHelper {
                 .then());
     }
 
-    public static EcoreValidatableResponse getMemberships(UUID roleId) {
+    public static EcoreValidatableResponse getMembershipsByRoleId(UUID roleId) {
         return sendRequest(given()
                 .queryParam("roleId", roleId)
                 .when()

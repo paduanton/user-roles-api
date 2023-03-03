@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface MembershipsService {
 
-    List<Membership> getMemberships(UUID roleId);
+    List<Membership> getMembershipsByRoleId(UUID roleId);
 
     Membership assignRoleToMembership(Membership membership) throws ResourceNotFoundException;
 }

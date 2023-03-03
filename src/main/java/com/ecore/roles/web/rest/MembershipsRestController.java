@@ -40,10 +40,10 @@ public class MembershipsRestController implements MembershipsApi {
     @GetMapping(
             path = "/search",
             produces = {"application/json"})
-    public ResponseEntity<List<MembershipDto>> getMemberships(@RequestParam UUID roleId) {
+    public ResponseEntity<List<MembershipDto>> getMembershipsByRoleId(@RequestParam UUID roleId) {
         return ResponseEntity
                 .status(200)
-                .body(membershipsService.getMemberships(roleId).stream()
+                .body(membershipsService.getMembershipsByRoleId(roleId).stream()
                         .map(MembershipDto::fromModel)
                         .collect(Collectors.toList()));
     }
