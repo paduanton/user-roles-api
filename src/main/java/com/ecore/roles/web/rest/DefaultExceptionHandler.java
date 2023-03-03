@@ -12,11 +12,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class DefaultExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handle(InvalidObjectException exception) {
-        return createResponse(400, exception.getMessage());
-    }
-
-    @ExceptionHandler
     public ResponseEntity<ErrorResponse> handle(ResourceNotFoundException exception) {
         return createResponse(404, exception.getMessage());
     }
@@ -29,6 +24,11 @@ public class DefaultExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handle(IllegalStateException exception) {
         return createResponse(500, exception.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handle(InvalidObjectException exception) {
+        return createResponse(400, exception.getMessage());
     }
 
     private ResponseEntity<ErrorResponse> createResponse(int status, String exception) {

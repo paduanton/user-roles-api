@@ -46,7 +46,6 @@ public class MembershipsServiceImplementation implements MembershipsService {
                 .orElseThrow(() -> new InvalidArgumentException(Role.class));
         UUID teamId = membership.getTeamId();
         UUID userId = membership.getUserId();
-        Team team = teamsClient.getTeam(teamId).getBody();
 
         roleRepository.findById(roleId).orElseThrow(() -> new ResourceNotFoundException(Role.class, roleId));
 
@@ -55,11 +54,11 @@ public class MembershipsServiceImplementation implements MembershipsService {
             throw new ResourceExistsException(Membership.class);
         }
 
-        if (team == null) {
+        if (teamsClient.getTeam(teamId).getBody() == null) {
             throw new ResourceNotFoundException(Team.class, teamId);
         }
 
-        if (!team.getTeamMemberIds().contains(userId)) {
+        if (!teamsClient.getTeam(teamId).getBody().getTeamMemberIds().contains(userId)) {
             throw new InvalidObjectException(Membership.class,
                     "The provided user doesn't belong to the provided team");
         }
