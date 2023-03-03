@@ -14,7 +14,7 @@ public interface RoleRepository extends JpaRepository<Role, UUID> {
 
     @Query("SELECT r FROM Role r LEFT JOIN r.membership m " +
             "WHERE (m.userId = :userId) AND (m.teamId = :teamId)")
-    List<Role> findByUserIdAndTeamId(UUID userId, UUID teamId);
+    Role findByUserIdAndTeamId(UUID userId, UUID teamId);
 
     Optional<Role> findByName(String name);
 }

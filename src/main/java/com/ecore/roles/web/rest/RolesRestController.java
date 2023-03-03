@@ -21,46 +21,44 @@ import static com.ecore.roles.web.dto.RoleDto.fromModel;
 @RequestMapping(value = "/v1/roles")
 public class RolesRestController implements RolesApi {
 
-    private final RolesService rolesService;
+        private final RolesService rolesService;
 
-    @Override
-    @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
-    public ResponseEntity<RoleDto> createRole(
-            @Valid @RequestBody RoleDto role) {
-        return ResponseEntity
-                .status(201)
-                .body(fromModel(rolesService.createRole(role.toModel())));
-    }
+        @Override
+        @PostMapping(consumes = { "application/json" }, produces = { "application/json" })
+        public ResponseEntity<RoleDto> createRole(
+                        @Valid @RequestBody RoleDto role) {
+                return ResponseEntity
+                                .status(201)
+                                .body(fromModel(rolesService.createRole(role.toModel())));
+        }
 
-    @Override
-    @GetMapping(produces = {"application/json"})
-    public ResponseEntity<List<RoleDto>> getRoles() {
-        return ResponseEntity
-                .status(200)
-                .body(rolesService.getRoles().stream()
-                        .map(RoleDto::fromModel)
-                        .collect(Collectors.toList()));
-    }
+        @Override
+        @GetMapping(produces = { "application/json" })
+        public ResponseEntity<List<RoleDto>> getRoles() {
+                return ResponseEntity
+                                .status(200)
+                                .body(rolesService.getRoles().stream()
+                                                .map(RoleDto::fromModel)
+                                                .collect(Collectors.toList()));
+        }
 
-    @Override
-    @GetMapping(path = "/{roleId}", produces = {"application/json"})
-    public ResponseEntity<RoleDto> getRole(
-            @PathVariable UUID roleId) {
-        return ResponseEntity
-                .status(200)
-                .body(fromModel(rolesService.getRole(roleId)));
-    }
+        @Override
+        @GetMapping(path = "/{roleId}", produces = { "application/json" })
+        public ResponseEntity<RoleDto> getRole(
+                        @PathVariable UUID roleId) {
+                return ResponseEntity
+                                .status(200)
+                                .body(fromModel(rolesService.getRole(roleId)));
+        }
 
-    @Override
-    @GetMapping(path = "/search", produces = {"application/json"})
-    public ResponseEntity<List<RoleDto>> getRolesByUserIdAndTeamId(
-            @NotNull @RequestParam UUID userId,
-            @NotNull @RequestParam UUID teamId) {
-        return ResponseEntity
-                .status(200)
-                .body(rolesService.getRolesByUserIdAndTeamId(userId, teamId).stream()
-                        .map(RoleDto::fromModel)
-                        .collect(Collectors.toList()));
-    }
+        @Override
+        @GetMapping(path = "/search", produces = { "application/json" })
+        public ResponseEntity<RoleDto> getRoleByUserIdAndTeamId(
+                        @NotNull @RequestParam UUID userId,
+                        @NotNull @RequestParam UUID teamId) {
+                return ResponseEntity
+                                .status(200)
+                                .body(fromModel(rolesService.getRoleByUserIdAndTeamId(userId, teamId)));
+        }
 
 }

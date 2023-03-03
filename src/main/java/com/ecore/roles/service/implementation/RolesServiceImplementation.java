@@ -48,15 +48,12 @@ public class RolesServiceImplementation implements RolesService {
     }
 
     @Override
-    public List<Role> getRolesByUserIdAndTeamId(UUID userId, UUID teamId) {
-        List<Role> roles;
+    public Role getRoleByUserIdAndTeamId(UUID userId, UUID teamId) {
 
         if (userId == null || teamId == null) {
             throw new InvalidArgumentException(Role.class);
-        } else {
-            roles = roleRepository.findByUserIdAndTeamId(userId, teamId);
         }
 
-        return roles;
+        return roleRepository.findByUserIdAndTeamId(userId, teamId);
     }
 }
