@@ -3,6 +3,7 @@ package com.ecore.roles.service.implementation;
 import com.ecore.roles.exception.InvalidArgumentException;
 import com.ecore.roles.exception.ResourceExistsException;
 import com.ecore.roles.exception.ResourceNotFoundException;
+import com.ecore.roles.exception.InvalidObjectException;
 import com.ecore.roles.model.Membership;
 import com.ecore.roles.model.Role;
 import com.ecore.roles.client.model.Team;
@@ -41,9 +42,11 @@ public class MembershipsServiceImplementation implements MembershipsService {
 
     @Override
     public Membership assignRoleToMembership(@NonNull Membership membership) {
-        UUID teamId = membership.getTeamId();
         UUID roleId = ofNullable(membership.getRole()).map(Role::getId)
                 .orElseThrow(() -> new InvalidArgumentException(Role.class));
+        UUID teamId = membership.getTeamId();
+        UUID userId = membership.getUserId();
+        Team team = teamsClient.getTeam(teamId).getBody();
 
         roleRepository.findById(roleId).orElseThrow(() -> new ResourceNotFoundException(Role.class, roleId));
 
@@ -52,8 +55,13 @@ public class MembershipsServiceImplementation implements MembershipsService {
             throw new ResourceExistsException(Membership.class);
         }
 
-        if(teamsClient.getTeam(teamId).getBody() == null) {
+        if (team == null) {
             throw new ResourceNotFoundException(Team.class, teamId);
+        }
+
+        if (!team.getTeamMemberIds().contains(userId)) {
+            throw new InvalidObjectException(Membership.class,
+                    "The provided user doesn't belong to the provided team");
         }
 
         return membershipRepository.save(membership);

@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 import java.util.UUID;
-import java.util.List;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, UUID> {

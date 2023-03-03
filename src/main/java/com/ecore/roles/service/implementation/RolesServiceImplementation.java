@@ -53,7 +53,7 @@ public class RolesServiceImplementation implements RolesService {
 
     @Override
     public Role getRoleByUserIdAndTeamId(UUID userId, UUID teamId) {
-        if(teamsClient.getTeam(teamId).getBody() == null) {
+        if (teamsClient.getTeam(teamId).getBody() == null) {
             throw new ResourceNotFoundException(Team.class, teamId);
         }
 
