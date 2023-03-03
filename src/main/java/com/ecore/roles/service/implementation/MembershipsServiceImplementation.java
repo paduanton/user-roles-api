@@ -37,7 +37,6 @@ public class MembershipsServiceImplementation implements MembershipsService {
         this.membershipRepository = membershipRepository;
         this.roleRepository = roleRepository;
         this.teamsClient = teamsClient;
-
     }
 
     @Override
@@ -47,12 +46,12 @@ public class MembershipsServiceImplementation implements MembershipsService {
         UUID teamId = membership.getTeamId();
         UUID userId = membership.getUserId();
 
-        roleRepository.findById(roleId).orElseThrow(() -> new ResourceNotFoundException(Role.class, roleId));
-
         if (membershipRepository.findByUserIdAndTeamId(membership.getUserId(), teamId)
                 .isPresent()) {
             throw new ResourceExistsException(Membership.class);
         }
+
+        roleRepository.findById(roleId).orElseThrow(() -> new ResourceNotFoundException(Role.class, roleId));
 
         if (teamsClient.getTeam(teamId).getBody() == null) {
             throw new ResourceNotFoundException(Team.class, teamId);

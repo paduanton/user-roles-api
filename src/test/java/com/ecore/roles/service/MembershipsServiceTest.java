@@ -3,6 +3,7 @@ package com.ecore.roles.service;
 import com.ecore.roles.exception.InvalidArgumentException;
 import com.ecore.roles.exception.ResourceExistsException;
 import com.ecore.roles.model.Membership;
+import com.ecore.roles.client.model.Team;
 import com.ecore.roles.repository.MembershipRepository;
 import com.ecore.roles.repository.RoleRepository;
 import com.ecore.roles.service.implementation.MembershipsServiceImplementation;
@@ -24,10 +25,17 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
+import static com.ecore.roles.utils.TestData.ORDINARY_CORAL_LYNX_TEAM;
+import static com.ecore.roles.utils.TestData.ORDINARY_CORAL_LYNX_TEAM_UUID;
+import com.ecore.roles.client.TeamsClient;
+import com.ecore.roles.service.implementation.TeamsServiceImplementation;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 @ExtendWith(MockitoExtension.class)
 class MembershipsServiceTest {
-
+        @InjectMocks
+        private TeamsServiceImplementation TeamsService;
     @InjectMocks
     private MembershipsServiceImplementation membershipsService;
     @Mock
@@ -38,6 +46,8 @@ class MembershipsServiceTest {
     private UsersService usersService;
     @Mock
     private TeamsService teamsService;
+    @Mock
+    private TeamsClient TeamsClient;
 
     @Test
     public void shouldCreateMembership() {
@@ -50,7 +60,11 @@ class MembershipsServiceTest {
         when(membershipRepository
                 .save(expectedMembership))
                         .thenReturn(expectedMembership);
-
+                        Team ordinaryCoralLynxTeam = ORDINARY_CORAL_LYNX_TEAM();
+                        when(TeamsClient.getTeam(ORDINARY_CORAL_LYNX_TEAM_UUID))
+                                .thenReturn(ResponseEntity
+                                        .status(HttpStatus.OK)
+                                        .body(ordinaryCoralLynxTeam));
         Membership actualMembership = membershipsService.assignRoleToMembership(expectedMembership);
 
         assertNotNull(actualMembership);
