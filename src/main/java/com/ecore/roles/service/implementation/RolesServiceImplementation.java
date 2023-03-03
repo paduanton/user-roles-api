@@ -36,17 +36,17 @@ public class RolesServiceImplementation implements RolesService {
     }
 
     @Override
-    public Role createRole(@NonNull Role r) {
-        if (roleRepository.findByName(r.getName()).isPresent()) {
+    public Role createRole(@NonNull Role role) {
+        if (roleRepository.findByName(role.getName()).isPresent()) {
             throw new ResourceExistsException(Role.class);
         }
-        return roleRepository.save(r);
+        return roleRepository.save(role);
     }
 
     @Override
-    public Role getRole(@NonNull UUID rid) {
-        return roleRepository.findById(rid)
-                .orElseThrow(() -> new ResourceNotFoundException(Role.class, rid));
+    public Role getRole(@NonNull UUID roleId) {
+        return roleRepository.findById(roleId)
+                .orElseThrow(() -> new ResourceNotFoundException(Role.class, roleId));
     }
 
     @Override
@@ -54,8 +54,8 @@ public class RolesServiceImplementation implements RolesService {
         return roleRepository.findAll();
     }
 
-    // @Override
-    // public List<Role> GetRolesByUserIdAndTeamId(@NonNull UUID rid) {
-    // return roleRepository.findByUserIdAndTeamId(rid);
-    // }
+    @Override
+    public List<Role> getRolesByUserIdAndTeamId(@NonNull UUID userId, @NonNull UUID teamId) {
+        return roleRepository.findByUserIdAndTeamId(userId, teamId);
+    }
 }

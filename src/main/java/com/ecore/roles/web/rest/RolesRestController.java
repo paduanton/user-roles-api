@@ -51,17 +51,15 @@ public class RolesRestController implements RolesApi {
                                 .body(fromModel(rolesService.getRole(roleId)));
         }
 
-        // @Override
-        // @GetMapping(
-        // path = "/search",
-        // produces = {"application/json"})
-        // public ResponseEntity<List<RoleDto>> getRolesByUserIdAndTeamId(@RequestParam
-        // UUID userId, @RequestParam UUID teamId) {
-        // return ResponseEntity
-        // .status(200)
-        // .body(rolesService.getRolesByUserIdAndTeamId(userId, teamId).stream()
-        // .map(RoleDto::fromModel)
-        // .collect(Collectors.toList()));
-        // }
+        @Override
+        @GetMapping(path = "/search", produces = { "application/json" })
+        public ResponseEntity<List<RoleDto>> getRolesByUserIdAndTeamId(@RequestParam UUID userId,
+                        @RequestParam UUID teamId) {
+                return ResponseEntity
+                                .status(200)
+                                .body(rolesService.getRolesByUserIdAndTeamId(userId, teamId).stream()
+                                                .map(RoleDto::fromModel)
+                                                .collect(Collectors.toList()));
+        }
 
 }
