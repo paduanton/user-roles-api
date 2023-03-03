@@ -58,14 +58,10 @@ public class RolesServiceImplementation implements RolesService {
     public List<Role> getRolesByUserIdAndTeamId(UUID userId, UUID teamId) {
         List<Role> roles;
 
-        if (userId != null && teamId != null) {
-            roles = roleRepository.findByUserIdAndTeamId(userId, teamId);
-        } else if (userId != null) {
-            roles = roleRepository.findByUserId(userId);
-        } else if (teamId != null) {
-            roles = roleRepository.findByTeamId(teamId);
-        } else {
+        if (userId == null && teamId == null) {
             roles = roleRepository.findAll();
+        } else {
+            roles = roleRepository.findByUserIdAndTeamId(userId, teamId);
         }
 
         return roles;
