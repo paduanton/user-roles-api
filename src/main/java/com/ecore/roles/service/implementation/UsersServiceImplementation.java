@@ -1,4 +1,4 @@
-package com.ecore.roles.service.impl;
+package com.ecore.roles.service.implementation;
 
 import com.ecore.roles.client.UsersClient;
 import com.ecore.roles.client.model.User;
@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class UsersServiceImpl implements UsersService {
+public class UsersServiceImplementation implements UsersService {
 
     private final UsersClient usersClient;
 
     @Autowired
-    public UsersServiceImpl(UsersClient usersClient) {
+    public UsersServiceImplementation(UsersClient usersClient) {
         this.usersClient = usersClient;
     }
 

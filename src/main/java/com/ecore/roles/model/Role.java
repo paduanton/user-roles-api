@@ -11,8 +11,9 @@ import org.hibernate.annotations.Type;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.UUID;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,4 +32,6 @@ public class Role {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @OneToMany(mappedBy = "role")
+    private List<Membership> membership;
 }

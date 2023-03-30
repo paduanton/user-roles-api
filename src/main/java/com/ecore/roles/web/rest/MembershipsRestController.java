@@ -5,11 +5,12 @@ import com.ecore.roles.service.MembershipsService;
 import com.ecore.roles.web.MembershipsApi;
 import com.ecore.roles.web.dto.MembershipDto;
 import lombok.RequiredArgsConstructor;
+import java.util.stream.Collectors;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,36 +24,23 @@ public class MembershipsRestController implements MembershipsApi {
     private final MembershipsService membershipsService;
 
     @Override
-    @PostMapping(
-            consumes = {"application/json"},
-            produces = {"application/json"})
+    @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<MembershipDto> assignRoleToMembership(
             @NotNull @Valid @RequestBody MembershipDto membershipDto) {
         Membership membership = membershipsService.assignRoleToMembership(membershipDto.toModel());
         return ResponseEntity
-                .status(200)
+                .status(201)
                 .body(fromModel(membership));
     }
 
     @Override
-    @PostMapping(
-            path = "/search",
-            produces = {"application/json"})
-    public ResponseEntity<List<MembershipDto>> getMemberships(
-            @RequestParam UUID roleId) {
-
-        List<Membership> memberships = membershipsService.getMemberships(roleId);
-
-        List<MembershipDto> newMembershipDto = new ArrayList<>();
-
-        for (Membership membership : memberships) {
-            MembershipDto membershipDto = fromModel(membership);
-            newMembershipDto.add(membershipDto);
-        }
-
+    @GetMapping(path = "/search", produces = {"application/json"})
+    public ResponseEntity<List<MembershipDto>> getMembershipsByRoleId(@NotNull @RequestParam UUID roleId) {
         return ResponseEntity
                 .status(200)
-                .body(newMembershipDto);
+                .body(membershipsService.getMembershipsByRoleId(roleId).stream()
+                        .map(MembershipDto::fromModel)
+                        .collect(Collectors.toList()));
     }
 
 }

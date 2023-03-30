@@ -45,6 +45,7 @@ public class UserDto {
         if (user == null) {
             return null;
         }
+
         return UserDto.builder()
                 .id(user.getId())
                 .firstName(user.getFirstName())

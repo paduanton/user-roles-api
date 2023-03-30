@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "76155277-5597-48a4-8f3e-4df0740f3842",
+		"_postman_id": "d01cbc5f-d76a-4d36-b20a-1c56fdfb3549",
 		"name": "backend-challenge",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5889563"
 	},
 	"item": [
 		{
@@ -58,12 +59,12 @@
 					"response": []
 				},
 				{
-					"name": "/role/search",
+					"name": "/roles/search",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/v1/roles/search?teamMemberId=fd282131-d8aa-4819-b0c8-d9e0bfb1b75c&teamId=7676a4bf-adfe-415c-941b-1739af07039b",
+							"raw": "http://localhost:8080/v1/roles/search",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -76,12 +77,14 @@
 							],
 							"query": [
 								{
-									"key": "teamMemberId",
-									"value": "fd282131-d8aa-4819-b0c8-d9e0bfb1b75c"
+									"key": "teamId",
+									"value": "7676a4bf-adfe-615c-9122-1139af07039a",
+									"disabled": true
 								},
 								{
-									"key": "teamId",
-									"value": "7676a4bf-adfe-415c-941b-1739af07039b"
+									"key": "userId",
+									"value": "fd282131-dadd-4819-b1c8-d1077fb1b75b",
+									"disabled": true
 								}
 							]
 						}
@@ -89,7 +92,89 @@
 					"response": []
 				},
 				{
-					"name": "/role/{roleId}",
+					"name": "/users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/teams",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/teams",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/teams/{teamId}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/teams/7676a4bf-adfe-415c-941b-1739af07039b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"teams",
+								"7676a4bf-adfe-415c-941b-1739af07039b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users/{userId}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/users/fd282131-d8aa-4819-b0c8-d9e0bfb1b75c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"users",
+								"fd282131-d8aa-4819-b0c8-d9e0bfb1b75c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/roles/{roleId}",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -116,7 +201,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"roleId\": \"1b3c333b-36e7-4b64-aa15-c22ed5908ce4\",\n    \"teamMemberId\": \"fd282131-d8aa-4819-b0c8-d9e0bfb1b75c\",\n    \"teamId\": \"7676a4bf-adfe-415c-941b-1739af07039b\"\n}",
+							"raw": "{\n    \"roleId\": \"37969e22-26f3-11ec-9621-0242ac130002\",\n    \"userId\": \"fd282131-dadd-4819-b1c8-d1077fb1b75b\",\n    \"teamId\": \"7676a4bf-adfe-615c-9122-1139af07039a\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -157,7 +242,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/v1/roles/memberships/search?roleId=1b3c333b-36e7-4b64-aa15-c22ed5908ce4",
+							"raw": "http://localhost:8080/v1/roles/memberships/search",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -172,7 +257,8 @@
 							"query": [
 								{
 									"key": "roleId",
-									"value": "1b3c333b-36e7-4b64-aa15-c22ed5908ce4"
+									"value": "37969e22-26f3-11ec-9621-0242ac130002",
+									"disabled": true
 								}
 							]
 						}
